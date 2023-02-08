@@ -4,7 +4,10 @@ const mongoose = require("mongoose");
 const userSchema = new mongoose.Schema({
   email: String,
   passwordHash: String,
-  lockerNumber: String,
+  lockerNumber: {
+    type: String,
+    unique: true,
+  },
   receivedParcels: [
     {
       type: mongoose.Schema.Types.ObjectId,
@@ -25,6 +28,14 @@ const userSchema = new mongoose.Schema({
   ],
 });
 
+//adding a locker number
+userSchema.pre("save", function (next) {
+  if (!this.lockerNumber) {
+    // Generate a locker number
+    this.lockerNumber = `L${Math.floor(100000 + Math.random() * 900000)}`;
+  }
+  next();
+});
 userSchema.set("toJSON", {
   transform: (document, returnedObject) => {
     returnedObject.id = returnedObject._id.toString();

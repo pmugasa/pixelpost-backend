@@ -13,6 +13,29 @@ const orderSchemam = mongoose.Schema({
     ref: "User",
   },
 
+  parcel: {
+    length: {
+      type: Number,
+      required: true,
+      min: [0, "Parcel length must be a positive number."],
+    },
+    width: {
+      type: Number,
+      required: true,
+      min: [0, "Parcel width must be a positive number."],
+    },
+    height: {
+      type: Number,
+      required: true,
+      min: [0, "Parcel height must be a positive number."],
+    },
+    weight: {
+      type: Number,
+      required: true,
+      min: [0, "Parcel weight must be a positive number."],
+    },
+  },
+
   address: {
     fullName: {
       type: String,
@@ -40,23 +63,29 @@ const orderSchemam = mongoose.Schema({
     },
   },
 
-  customsInformation: [
-    {
-      itemDescription: {
-        type: String,
-        required: true,
+  customsInformation: {
+    contentsType: String,
+    contentsExplanation: String,
+    nonDeliveryOption: String,
+    certify: Boolean,
+    certifySigner: String,
+    customsItems: [
+      {
+        itemDescription: {
+          type: String,
+          required: true,
+        },
+        itemQuantity: {
+          type: Number,
+          required: true,
+        },
+        itemValue: {
+          type: Number,
+          required: true,
+        },
       },
-      quantity: {
-        type: Number,
-        required: true,
-      },
-      value: {
-        type: Number,
-        required: true,
-      },
-    },
-  ],
-
+    ],
+  },
   selectedAddons: [
     {
       type: mongoose.Schema.Types.ObjectId,
@@ -75,10 +104,12 @@ const orderSchemam = mongoose.Schema({
     type: Number,
     required: true,
   },
+
   totalCost: {
     type: Number,
     required: true,
   },
+
   status: {
     type: String,
     enum: Object.values(OrderStatus),

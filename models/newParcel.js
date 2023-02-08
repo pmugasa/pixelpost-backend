@@ -1,33 +1,23 @@
 const mongoose = require("mongoose");
 
-const newParcelSchema = new mongoose.Schema(
-  {
-    //user who requested packing
-    user: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "User",
-    },
-
-    //parcels to be packed
-    parcels: [
-      {
-        shipmentId: String,
-        require: true,
-      },
-    ],
-
-    //addons to be applied to items being packed
-    addons: {
-      itemPhotos: Boolean,
-      deviceTesting: Boolean,
-      doubleWalledBox: Boolean,
-      bubbleWrap: Boolean,
-    },
+const newParcelSchema = new mongoose.Schema({
+  user: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "User",
   },
-
-  //date when the request was done
-  { timestamps: true }
-);
+  parcels: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Parcel",
+    },
+  ],
+  addons: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Addons",
+    },
+  ],
+});
 
 const NewParcel = mongoose.model("NewParcel", newParcelSchema);
 
