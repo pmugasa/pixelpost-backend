@@ -4,14 +4,17 @@ const mongoose = require("mongoose");
 
 const receivedParcelSchema = new mongoose.Schema(
   {
-    shipmentId: {
-      type: mongoose.Types.ObjectId,
-      default: mongoose.Types.ObjectId,
-      alias: "_id",
-    },
-    user: {
+    customer: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",
+      required: true,
+    },
+    lockerNumber: {
+      type: String,
+    },
+    dateReceived: {
+      type: Date,
+      default: Date.now,
     },
     trackingNumber: String,
     weight: Number,

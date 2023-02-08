@@ -8,9 +8,13 @@ const OrderStatus = Object.freeze({
 });
 
 const orderSchemam = mongoose.Schema({
-  user: {
+  customer: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "User",
+  },
+  adminId: {
+    type: String,
+    required: false,
   },
 
   parcel: {
@@ -97,23 +101,23 @@ const orderSchemam = mongoose.Schema({
   selectedCarrier: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "Carrier",
-    required: true,
+    required: false,
   },
 
   shippingCost: {
     type: Number,
-    required: true,
+    required: false,
   },
 
   totalCost: {
     type: Number,
-    required: true,
+    required: false,
   },
 
   status: {
     type: String,
     enum: Object.values(OrderStatus),
     default: OrderStatus.PACKING,
-    required: true,
+    required: false,
   },
 });
