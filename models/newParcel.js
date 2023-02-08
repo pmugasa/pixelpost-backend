@@ -2,18 +2,33 @@ const mongoose = require("mongoose");
 
 const newParcelSchema = new mongoose.Schema(
   {
-    weight: Number,
-    dimensionalWeight: Number,
-    addons: String,
+    //user who requested packing
     user: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",
     },
-    address: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "Address",
+
+    //parcels to be packed
+    parcels: [
+      {
+        shipmentId: String,
+        require: true,
+      },
+    ],
+
+    //addons to be applied to items being packed
+    addons: {
+      itemPhotos: Boolean,
+      deviceTesting: Boolean,
+      doubleWalledBox: Boolean,
+      bubbleWrap: Boolean,
     },
-    status: Boolean,
   },
+
+  //date when the request was done
   { timestamps: true }
 );
+
+const NewParcel = mongoose.model("NewParcel", newParcelSchema);
+
+module.exports = NewParcel;

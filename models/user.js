@@ -17,7 +17,7 @@ const userSchema = new mongoose.Schema({
       ref: "NewParcel",
     },
   ],
-  order: [
+  orders: [
     {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Order",

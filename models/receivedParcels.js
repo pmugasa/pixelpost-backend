@@ -9,10 +9,14 @@ const receivedParcelSchema = new mongoose.Schema(
       default: mongoose.Types.ObjectId,
       alias: "_id",
     },
-    userId: String,
+    user: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
+    },
     trackingNumber: String,
     weight: Number,
   },
+
   { timestamps: true }
 );
 
