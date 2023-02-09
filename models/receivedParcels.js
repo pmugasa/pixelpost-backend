@@ -4,7 +4,7 @@ const mongoose = require("mongoose");
 
 const receivedParcelSchema = new mongoose.Schema(
   {
-    customer: {
+    user: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",
       required: true,

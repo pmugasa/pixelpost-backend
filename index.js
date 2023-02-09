@@ -32,26 +32,36 @@ app.get("/received-parcels", async (req, res) => {
 //creating a new received parcel
 app.post("/received-parcel", async (req, res) => {
   const body = req.body;
+  const lockerNumber = body.lockerNumber;
   if (body === undefined) {
     res.status(400).json({
       error: "Content missing. Please fill in the form",
     });
   }
-  const parcel = new ReceivedParcel({
-    customer: body.userId,
-    trackingNumber: body.trackingNumber,
-    weight: body.weight,
-  });
   try {
-    await parcel.save();
-
-    //looking for the user it belongs to
-    const user = await User.findById(body.userId);
-    user.receivedParcels.push(parcel._id);
+    // Find the user associated with the given locker number
+    const user = await User.findOne({ lockerNumber });
+    if (!user) {
+      res
+        .status(404)
+        .json(`No user found with locker number ${body.lockerNumber}`);
+    }
+    console.log(user);
+    // Create a new ReceivedParcel object and save it to the database
+    const receivedParcel = new ReceivedParcel({
+      trackingNumber: body.trackingNumber,
+      lockerNumber: body.lockerNumber,
+      dateReceived: new Date(),
+      user: user._id,
+    });
+    user.receivedParcels.push(receivedParcel._id);
+    await receivedParcel.save();
     await user.save();
-    res.status(201).json(parcel);
+
+    res.status(201).json(user);
   } catch (error) {
-    res.send(error);
+    console.log(error);
+    res.status(500).json(error);
   }
 });
 
@@ -86,17 +96,14 @@ app.delete("/received-parcel/:id", async (req, res) => {
 app.post("/new-parcel", async (req, res) => {
   const body = req.body;
 
-  const user = await User.findById(body.userId);
+  //const user = await User.findById(body.userId);
 
   const parcel = new NewParcel({
-    user: user._id,
+    lockerNumber: body.lockerNumber,
     parcels: body.parcels,
     addons: body.addons,
   });
-
   const savedParcel = await parcel.save();
-  user.newParcel = user.newParcel.concat(savedParcel._id);
-  await user.save();
 
   res.json(savedParcel);
 });
@@ -136,7 +143,7 @@ app.post("/create-account", async (req, res) => {
 
   res.status(201).json(savedUser);
 });
-
+//TODO get a specific user
 //getting a specific order
 app.get("/order/:id", async (req, res) => {
   const id = req.params.id;
