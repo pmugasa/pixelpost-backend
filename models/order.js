@@ -7,7 +7,7 @@ const OrderStatus = Object.freeze({
   SHIPPED: "SHIPPED",
 });
 
-const orderSchemam = mongoose.Schema({
+const orderSchema = mongoose.Schema({
   customer: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "User",
@@ -20,22 +20,22 @@ const orderSchemam = mongoose.Schema({
   parcel: {
     length: {
       type: Number,
-      required: true,
+      required: false,
       min: [0, "Parcel length must be a positive number."],
     },
     width: {
       type: Number,
-      required: true,
+      required: false,
       min: [0, "Parcel width must be a positive number."],
     },
     height: {
       type: Number,
-      required: true,
+      required: false,
       min: [0, "Parcel height must be a positive number."],
     },
     weight: {
       type: Number,
-      required: true,
+      required: false,
       min: [0, "Parcel weight must be a positive number."],
     },
   },
@@ -43,27 +43,27 @@ const orderSchemam = mongoose.Schema({
   address: {
     fullName: {
       type: String,
-      required: true,
+      required: false,
     },
     phoneNumber: {
       type: String,
-      required: true,
+      required: false,
     },
     street1: {
       type: String,
-      required: true,
+      required: false,
     },
     street2: {
       type: String,
     },
     city: {
       type: String,
-      required: true,
+      required: false,
     },
 
     postalCode: {
       type: String,
-      required: true,
+      required: false,
     },
   },
 
@@ -94,7 +94,7 @@ const orderSchemam = mongoose.Schema({
     {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Addons",
-      required: true,
+      required: false,
     },
   ],
 
@@ -121,3 +121,7 @@ const orderSchemam = mongoose.Schema({
     required: false,
   },
 });
+
+const Order = mongoose.model("Order", orderSchema);
+
+module.exports = Order;

@@ -8,7 +8,7 @@ const newParcelSchema = new mongoose.Schema({
   parcels: [
     {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "Parcel",
+      ref: "ReceivedParcel",
     },
   ],
   addons: [
