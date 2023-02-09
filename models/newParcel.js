@@ -13,8 +13,8 @@ const newParcelSchema = new mongoose.Schema({
   ],
   addons: [
     {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "Addons",
+      type: String,
+      required: false,
     },
   ],
 });

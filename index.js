@@ -96,16 +96,17 @@ app.delete("/received-parcel/:id", async (req, res) => {
 app.post("/new-parcel", async (req, res) => {
   const body = req.body;
 
-  //const user = await User.findById(body.userId);
-
-  const parcel = new NewParcel({
-    lockerNumber: body.lockerNumber,
-    parcels: body.parcels,
-    addons: body.addons,
-  });
-  const savedParcel = await parcel.save();
-
-  res.json(savedParcel);
+  try {
+    const parcel = new NewParcel({
+      user: body.user._id,
+      parcels: body.parcels,
+      addons: body.addons,
+    });
+    await parcel.save();
+    res.status(201).json(parcel);
+  } catch (error) {
+    res.status(500).json(error);
+  }
 });
 
 //getting all the parcels
