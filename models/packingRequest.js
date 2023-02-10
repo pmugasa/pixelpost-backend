@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 
-const newParcelSchema = new mongoose.Schema({
+const packingRequestSchema = new mongoose.Schema({
   user: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "User",
@@ -19,6 +19,6 @@ const newParcelSchema = new mongoose.Schema({
   ],
 });
 
-const NewParcel = mongoose.model("NewParcel", newParcelSchema);
+const PackingRequest = mongoose.model("PackingRequest", packingRequestSchema);
 
-module.exports = NewParcel;
+module.exports = PackingRequest;

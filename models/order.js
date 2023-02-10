@@ -8,7 +8,7 @@ const OrderStatus = Object.freeze({
 });
 
 const orderSchema = mongoose.Schema({
-  customer: {
+  user: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "User",
   },

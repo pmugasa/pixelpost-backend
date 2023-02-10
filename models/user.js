@@ -2,8 +2,20 @@ const mongoose = require("mongoose");
 
 //user schema
 const userSchema = new mongoose.Schema({
-  email: String,
-  passwordHash: String,
+  email: {
+    type: String,
+    required: true,
+    unique: true,
+  },
+  passwordHash: {
+    type: String,
+    required: true,
+  },
+  role: {
+    type: String,
+    enum: ["admin", "user"],
+    default: "user",
+  },
   lockerNumber: {
     type: String,
     unique: true,
@@ -14,10 +26,10 @@ const userSchema = new mongoose.Schema({
       ref: "ReceivedParcel",
     },
   ],
-  newParcel: [
+  packingRequests: [
     {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "NewParcel",
+      ref: "PackingRequest",
     },
   ],
   orders: [
