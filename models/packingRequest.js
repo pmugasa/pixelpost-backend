@@ -1,5 +1,5 @@
 const mongoose = require("mongoose");
-
+const addonsSchema = require("./addons");
 const packingRequestSchema = new mongoose.Schema({
   user: {
     type: mongoose.Schema.Types.ObjectId,
@@ -7,16 +7,13 @@ const packingRequestSchema = new mongoose.Schema({
   },
   parcels: [
     {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "ReceivedParcel",
+      trackingNumber: {
+        type: String,
+        required: true,
+      },
     },
   ],
-  addons: [
-    {
-      type: String,
-      required: false,
-    },
-  ],
+  addons: [addonsSchema],
 });
 
 const PackingRequest = mongoose.model("PackingRequest", packingRequestSchema);

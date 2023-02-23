@@ -16,8 +16,20 @@ const receivedParcelSchema = new mongoose.Schema(
       type: Date,
       default: Date.now,
     },
-    trackingNumber: String,
-    weight: Number,
+    trackingNumber: {
+      type: String,
+      required: true,
+    },
+    weight: {
+      type: Number,
+      required: true,
+    },
+    images: [
+      {
+        data: Buffer,
+        contentType: String,
+      },
+    ],
   },
 
   { timestamps: true }

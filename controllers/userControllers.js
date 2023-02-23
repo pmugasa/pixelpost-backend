@@ -14,11 +14,7 @@ const user_index = async (req, res) => {
     return res.status(401).send({ error: "Not authorized" });
   }
 
-  const users = await User.find({}).populate([
-    "receivedParcels",
-    "orders",
-    "packingRequests",
-  ]);
+  const users = await User.find({}).populate("packingRequests");
 
   res.json(users);
 };

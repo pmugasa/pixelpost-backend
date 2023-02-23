@@ -5,12 +5,10 @@ const addonsSchema = mongoose.Schema({
     type: String,
     required: true,
   },
-  cost: {
+  price: {
     type: Number,
     required: true,
   },
 });
 
-const Addons = mongoose.model("Addons", addonsSchema);
-
-module.exports = Addons;
+module.exports = addonsSchema;
