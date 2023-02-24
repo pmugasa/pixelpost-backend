@@ -32,6 +32,12 @@ const userSchema = new mongoose.Schema({
       ref: "PackingRequest",
     },
   ],
+  parcels: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Parcel",
+    },
+  ],
   orders: [
     {
       type: mongoose.Schema.Types.ObjectId,

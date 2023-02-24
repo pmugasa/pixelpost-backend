@@ -18,7 +18,6 @@ const create_shipment = async (req, res) => {
   //address object
   const address_to = {
     name: body.address.fullName,
-    company: body.address.company,
     street1: body.address.street1,
     city: body.address.city,
     zip: body.zip.zip,
@@ -86,3 +85,5 @@ const purchase_label = async (req, res) => {
     }
   );
 };
+
+module.exports = { create_shipment };

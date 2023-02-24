@@ -7,7 +7,7 @@ const parcel_index = async (req, res) => {
   }
 
   try {
-    res.json(parcels);
+    res.status(200).json(parcels);
     mongoose.connection.close();
   } catch (error) {
     res.status(500).json(error);

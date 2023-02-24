@@ -18,6 +18,7 @@ const orderRoutes = require("./routes/orderRoutes");
 const loginRoutes = require("./routes/loginRoutes");
 const logoutRoutes = require("./routes/logoutRoutes");
 const parcelRoutes = require("./routes/parcelRoutes");
+const shipmentRoutes = require("./routes/shipmentRoutes");
 
 //connecting to the db
 mongoose.set("strictQuery", false);
@@ -36,11 +37,12 @@ app.use(express.json());
 app.use(requestLogger);
 app.use("/login", loginRoutes);
 app.use("/logout", logoutRoutes);
-app.use("/", userRoutes);
+app.use("/users", userRoutes);
 app.use("/received-parcel", receivedParcelRoutes);
 app.use("/pack", packingRequestRoutes);
 app.use("/order", orderRoutes);
-app.use("/parcel-create", parcelRoutes);
+app.use("/parcels", parcelRoutes);
+app.use("/create-shipment", shipmentRoutes);
 app.use(unknownEndPoints);
 app.use(errorHandler);
 

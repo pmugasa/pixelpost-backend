@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 
 const parcelSchema = new mongoose.Schema({
-  length: {
+  parcelLength: {
     type: Number,
     required: false,
     min: [0, "Parcel length must be a positive number."],
@@ -21,9 +21,9 @@ const parcelSchema = new mongoose.Schema({
     required: false,
     min: [0, "Parcel weight must be a positive number."],
   },
-  order: {
+  user: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: "Order",
+    ref: "User",
   },
 });
 

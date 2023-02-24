@@ -29,6 +29,7 @@ const pack_index = async (req, res, next) => {
   }
 };
 
+//creating a packing request form
 const pack_create = async (req, res, next) => {
   //verify token
   const decodedToken = jwt.verify(getTokenFrom(req), process.env.JWT_SECRET);
@@ -40,7 +41,7 @@ const pack_create = async (req, res, next) => {
   const user = await User.findById(decodedToken.id);
   try {
     const packRequest = new PackingRequest({
-      user: user._id,
+      user: user.lockerNumber,
       parcels: body.parcels,
       addons: body.addons,
     });
@@ -58,7 +59,30 @@ const pack_create = async (req, res, next) => {
   }
 };
 
+//getting a single packing request by its id
+const pack_single = async (req, res) => {
+  //verify token
+  const decodedToken = jwt.verify(getTokenFrom(req), process.env.JWT_SECRET);
+  if (!decodedToken.id) {
+    return res.status(401).json({ error: "Token invalid, please login" });
+  }
+
+  const id = req.params.id;
+
+  try {
+    const packingRequest = await PackingRequest.findById(id);
+    if (packingRequest) {
+      return res.status(200).json(packingRequest);
+    } else {
+      return res.status(404).send({ error: "Not found" });
+    }
+  } catch (error) {
+    return res.status(400).send({ error: "Invalid id, please check your id" });
+  }
+};
+
 module.exports = {
   pack_index,
   pack_create,
+  pack_single,
 };
